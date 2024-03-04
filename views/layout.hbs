@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Med!store</title>
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    {{#if isAuthenticated}}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand mx-5 fw-bold text-success" id="text" href="/" style="font-size: 25px;">Med!Store</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <button class="btn-close d-lg-none" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav" aria-controls="navbarNav" aria-label="Close"></button>
+                <ul class="navbar-nav ms-auto align-items-md-center me-5">
+                    <li class="nav-item">
+                        <a class="nav-link active text-muted" href="/" style="font-weight: bold; font-size: 14px;">Hello <span style="text-transform: uppercase;">{{username}}</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="" style="font-size: 18px;"><i
+                                class="fa-solid fa-cart-plus"></i></a>
+                    </li>
+                    <li class="nav-item px-3">
+                        <button type="button" class="btn btn-outline-success" data-bs-toggle="modal"
+                            data-bs-target="#addMedicineModal" style="font-size: 14px;font-weight: 500;">Add
+                            Medicine&nbsp;&nbsp;<i class="fa-solid fa-circle-plus"></i></button>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" title="Logout" href="/logout" style="font-size: 20px;"><i class="fa-solid fa-right-from-bracket"></i></a> <!-- Logout button -->
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    {{/if}}
+    <div class="container pt-2">
+        {{> flashMessage}}
+    </div>
+    
+<!-- Modal for Adding Medicine -->
+<div class="modal fade" id="addMedicineModal" tabindex="-1" aria-labelledby="addMedicineModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addMedicineModalLabel">Add Medicine</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Form for Adding Medicine -->
+                <form id="addMedicineForm" action="/addMedicine" method="post">
+    <!-- Other form fields... -->
+    <div class="mb-3">
+        <label for="medicineName" class="form-label">Medicine Name</label>
+        <input type="text" class="form-control" id="medicineName" name="name" required>
+    </div>
+    <div class="mb-3">
+        <label for="medicineDescription" class="form-label">Description</label>
+        <textarea class="form-control" id="medicineDescription" name="description" style="resize: none;" required></textarea>
+        <small id="charCount" class="form-text text-muted">Words remaining: 80</small>
+    </div>
+    <div class="mb-3">
+        <label for="medicineStrikedPrice" class="form-label">MRP</label>
+        <input type="number" class="form-control" id="medicineStrikedPrice" name="strikedprice" required>
+    </div>
+    <div class="mb-3">
+        <label for="medicinePrice" class="form-label">Offer Price</label>
+        <input type="number" class="form-control" id="medicinePrice" name="price" required>
+    </div>
+    <!-- Centered button -->
+    <div class="text-center" id="addMedButton">
+        <button type="submit" class="btn" style="background-color: #19625d; color: white;">Add Medicine</button>
+    </div>
+    <!-- Other form fields... -->
+</form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <div class="container-fluid">
+        {{{body}}}
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-GLhlTQ8iK2xK2Zq5vY5CGtnvqEjZJSqEqqgFg5fEmmeS9SzYUZlU8ZI5ethNf"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // for counting the modal description characters
+    const descriptionTextarea = document.getElementById('medicineDescription');
+    const charCount = document.getElementById('charCount');
+
+    descriptionTextarea.addEventListener('input', function () {
+        const remainingChars = 80 - this.value.length;
+        charCount.textContent = `Characters remaining: ${remainingChars}`;
+    });
+
+</script>
+<script>
+    // Close flash messages after 3 seconds
+    setTimeout(function () {
+        var flashSuccess = document.querySelector('.alert-success');
+        if (flashSuccess) {
+            flashSuccess.style.display = 'none';
+        }
+
+        var flashError = document.querySelector('.alert-danger');
+        if (flashError) {
+            flashError.style.display = 'none';
+        }
+    }, 2000);
+</script>
+
+
+</body>
+</html>
