@@ -35,30 +35,12 @@
   </div>
 </div>
 
-<!-- Include the necessary scripts at the bottom -->
+
 <script>
   $(document).ready(function () {
-    // Add a click event for the Edit button
-    $('.edit-btn').click(function () {
-      const itemId = $(this).data('id');
-      console.log('Edit button clicked, itemId:', itemId);
-      const itemName = $(this).data('name');
-      const itemDescription = $(this).data('description');
-      const itemPrice = $(this).data('price');
-      const itemStrikedPrice = $(this).data('strikedprice');
 
-      // Populate the modal fields with existing data
-      $('#editName').val(itemName);
-      $('#editDescription').val(itemDescription);
-      $('#editPrice').val(itemPrice);
-      $('#editStrikedPrice').val(itemStrikedPrice);
-      $('#editItemId').val(itemId);
+    //  Update Changes
 
-      // Show the modal
-      $('#editModal').modal('show');
-    });
-
-    // Add a click event for the Update Changes button
     $('#updateChangesBtn').click(function () {
       const itemId = $('#editItemId').val();
       console.log('Update Changes button clicked, itemId:', itemId);
@@ -85,7 +67,7 @@
         },
         error: function (error) {
           console.error(error);
-          // Handle error if needed
+          
         }
       });
     });
@@ -333,10 +315,3 @@ function highlightSearchTerm(text, searchTerm) {
 
   });
 </script>
-
-
-
-
-
-
-
