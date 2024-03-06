@@ -5,6 +5,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const hbs = require('hbs');
+const dotenv = require('dotenv');
 
 const signup = require('./routes/signup');
 const login = require('./routes/login');
@@ -15,8 +16,10 @@ const logout = require('./routes/logout');
 const update = require('./routes/updateMed');
 const searchRoute = require('./routes/search');
 
+const app = express();
+dotenv.config()
 
-mongoose.connect('mongodb://localhost/medstore');
+mongoose.connect(process.env.MONGO_URI);
 let db = mongoose.connection;
 
 db.on('error', function (err) {
@@ -28,7 +31,6 @@ db.once('open', function () {
 
 hbs.registerPartials(__dirname + '/views/partials');
 
-const app = express();
 
 app.use(session({ secret: 'your-secret-key', resave: true, saveUninitialized: true }));
 app.use(flash());
